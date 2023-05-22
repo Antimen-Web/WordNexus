@@ -118,7 +118,7 @@
 }
 
 .prompt_layout {
-  @apply grid grid-cols-3 max-w-5xl py-8 max-[1165px]:grid-cols-2 max-[1165px]:max-w-2xl max-[816px]:grid-cols-1 sm:gap-6;
+  @apply grid grid-cols-3 max-w-5xl py-8 gap-6 max-[1165px]:grid-cols-2 max-[1165px]:max-w-2xl max-[816px]:grid-cols-1;
 }
 
 /* Feed Component */
