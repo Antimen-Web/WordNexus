@@ -14,7 +14,7 @@ const RootLayout = ({ Component, pageProps  }) => {
     const router = useRouter();
     const currentUrl = router.asPath;
     const siteName = "WordNexus";
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = "https://word-nexus.vercel.app";
 
     return (
       <Provider>
