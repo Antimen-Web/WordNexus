@@ -1,6 +1,15 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+  experimental: {
+    reactRoot: true,
+    runtime: 'edge',
+  },
+  images: {
+    domains: ["lh3.googleusercontent.com"],
+  },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
