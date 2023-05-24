@@ -8,9 +8,9 @@ export default async function handler(req, res) {
 
       const cards = await Card.find({}).populate("creator");
 
-      res.status(200).json(cards);
+      return res.status(200).json(cards);
     } catch (error) {
-      res.status(500).send("Failed to fetch all cards");
+      return res.status(500).send("Failed to fetch all cards");
     }
   }
 };

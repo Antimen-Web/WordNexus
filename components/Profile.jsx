@@ -1,4 +1,5 @@
 import WordCard from "@components/WordCard";
+import SceletonCard from "@components/SceletonCard";
 const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
   return (
       <>
@@ -10,14 +11,16 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
           </div>
 
           <div className="mt-10 prompt_layout w-auto">
-            {data.map((post) => (
-              <WordCard
-                key={post._id}
-                post={post}
-                handleEdit={() => handleEdit && handleEdit(post)}
-                handleDelete={() => handleDelete && handleDelete(post)}
-              />
-            ))}
+              {!data.length
+                  ? [...Array(6)].map((_, i) => <SceletonCard key={i} />)
+                  : data.map((post) => (
+                      <WordCard
+                          key={post._id}
+                          post={post}
+                          handleEdit={() => handleEdit && handleEdit(post)}
+                          handleDelete={() => handleDelete && handleDelete(post)}
+                      />
+                  ))}
           </div>
       </>
   );

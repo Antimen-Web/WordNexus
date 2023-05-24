@@ -17,6 +17,9 @@ module.exports = {
       lineHeight: {
         '12': '3rem',
       },
+      maxWidth: {
+        'xs2': '21rem',
+      }
     },
   },
   plugins: [],

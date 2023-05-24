@@ -77,8 +77,16 @@
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
 }
 
-.black_btn {
-  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+.btn {
+  @apply rounded-full border py-1.5 px-5 text-white transition-all  text-sm font-inter flex items-center justify-center;
+}
+
+.btn.black {
+  @apply border-black bg-black hover:bg-white hover:text-black text-center;
+}
+
+.btn.blue {
+  @apply border-blue-700 bg-blue-700 hover:bg-white hover:text-black text-center;
 }
 
 .outline_btn {
@@ -118,7 +126,8 @@
 }
 
 .prompt_layout {
-  @apply grid grid-cols-3 max-w-5xl py-8 gap-6 max-[1165px]:grid-cols-2 max-[1165px]:max-w-2xl max-[816px]:grid-cols-1;
+  width: 64rem;
+  @apply grid grid-cols-3 py-8 gap-6 max-[1165px]:grid-cols-2 max-[1165px]:max-w-2xl max-[816px]:grid-cols-1 max-[816px]:max-w-xs2 max-[400px]:w-full;
 }
 
 /* Feed Component */

@@ -35,7 +35,7 @@ const Nav = () => {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-card" className="black_btn">
+            <Link href="/create-card" className="btn black">
               Create card
             </Link>
 
@@ -61,7 +61,7 @@ const Nav = () => {
                   type="button"
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
-                  className="black_btn"
+                  className="btn black"
                 >
                   Sing In
                 </button>
@@ -106,7 +106,7 @@ const Nav = () => {
                     setToggleDropdown(false);
                     signOut();
                   }}
-                  className="mt-5 w-full black_btn"
+                  className="mt-5 w-full btn black"
                 >
                   Sing Out
                 </button>
@@ -121,7 +121,7 @@ const Nav = () => {
                   type="button"
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
-                  className="black_btn"
+                  className="btn black"
                 >
                   Sing In
                 </button>

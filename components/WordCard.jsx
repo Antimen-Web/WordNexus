@@ -54,7 +54,6 @@ const WordCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
             width={20}
             height={20}
             alt="copy"
-            className="fill-blue-700 "
           />
         </div>
       </div>
