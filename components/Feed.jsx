@@ -1,19 +1,8 @@
-import {useState, useEffect, useRef} from "react";
-
-import WordCard from "@components/WordCard";
-import SceletonCard from "@components/SceletonCard";
-
-const CardList = ({ data, handleTagClick }) => {
-  return (
-    <div className="mt-16 prompt_layout">
-      {!data.length
-          ? [...Array(6)].map((_, i) => <SceletonCard key={i} />)
-          : data.map((post) => (
-              <WordCard key={post._id} post={post} handleTagClick={handleTagClick} />
-          ))}
-    </div>
-  );
-};
+import { useState, useEffect, useRef } from "react";
+import CardList from "@components/CardList";
+import { Study } from "@utils/study";
+import Search from "@components/Search";
+import React from "@node_modules/react";
 
 const Feed = () => {
   const inputRef = useRef(null);
@@ -24,11 +13,11 @@ const Feed = () => {
   const [page, setPage] = useState(1);
 
   const filterPosts = () => {
-      const filtered = posts.filter(
-          (post) =>
-              post.word.toLowerCase().includes(searchText.toLowerCase()) ||
-              post.tag.toLowerCase().includes(searchText.toLowerCase())
-      );
+    const filtered = posts.filter(
+      (post) =>
+        post.word.toLowerCase().includes(searchText.toLowerCase()) ||
+        post.tag.toLowerCase().includes(searchText.toLowerCase())
+    );
 
     setFilteredPosts(filtered);
     setVisiblePosts(filtered.slice(0, page * 6));
@@ -47,9 +36,7 @@ const Feed = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
-
   useEffect(() => {
-
     const fetchPosts = async () => {
       const response = await fetch("/api/card/get");
       const data = await response.json();
@@ -77,14 +64,18 @@ const Feed = () => {
         />
       </form>
 
-      <CardList data={visiblePosts} handleTagClick={() => {}} />
+      <CardList
+        data={visiblePosts}
+        handleTagClick={(tag) => {
+          setSearchText(tag);
+        }}
+      />
 
       {visiblePosts.length < filteredPosts.length && (
-          <button className="btn blue mb-10 mt-5" onClick={handleLoadMore}>
-            Load More
-          </button>
+        <button className="btn blue mb-10 mt-5" onClick={handleLoadMore}>
+          Load More
+        </button>
       )}
-
     </section>
   );
 };

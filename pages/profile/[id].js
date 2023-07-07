@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 import Profile from "@components/Profile";
 
@@ -12,14 +12,14 @@ const MyProfile = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/users/${session?.user.id}/posts`);
+      const response = await fetch(`/api/users/${router.query.id}/posts`);
       const data = await response.json();
 
       setPosts(data);
     };
 
     if (session?.user.id) fetchPosts();
-  }, [session]);
+  }, [session, router]);
 
   const handleEdit = (post) => {
     router.push(`/update-card?id=${post._id}`);

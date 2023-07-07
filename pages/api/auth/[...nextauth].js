@@ -26,6 +26,7 @@ export default NextAuth({
             email: profile.email,
             username: profile.name,
             image: profile.picture,
+            allWords: [],
           });
         }
 
@@ -39,6 +40,7 @@ export default NextAuth({
       try {
         const sessionUser = await User.findOne({ email: session.user.email });
         session.user.id = sessionUser._id.toString();
+        session.user.allWords = sessionUser.allWords;
 
         return session;
       } catch (error) {

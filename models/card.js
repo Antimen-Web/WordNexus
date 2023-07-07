@@ -15,10 +15,18 @@ const CardSchema = new Schema({
   },
   tag: {
     type: String,
-    required: [true, "Tag is required."],
+  },
+  examples: {
+    type: String,
   },
   image: {
     type: String,
+  },
+  level: {
+    type: Number,
+  },
+  levelProgress: {
+    type: Number,
   },
 });
 

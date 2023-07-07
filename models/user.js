@@ -13,6 +13,9 @@ const UserSchema = new Schema({
   image: {
     type: String,
   },
+  allWords: {
+    type: Array,
+  },
 });
 
 const User = models.User || model("User", UserSchema);

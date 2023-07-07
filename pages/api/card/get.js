@@ -2,7 +2,7 @@ import Card from "@models/card";
 import { connectToDB } from "@utils/database";
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     try {
       await connectToDB();
 
@@ -10,7 +10,8 @@ export default async function handler(req, res) {
 
       return res.status(200).json(cards);
     } catch (error) {
-      return res.status(500).send("Failed to fetch all cards");
+      console.log(error.message);
+      res.status(500).send("Failed to fetch all cards");
     }
   }
-};
+}

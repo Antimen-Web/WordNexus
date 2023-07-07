@@ -13,7 +13,10 @@ const CreateCard = () => {
     word: "",
     desc: "",
     tag: "",
+    examples: "",
     image: null,
+    level: 0,
+    levelProgress: 0,
   });
 
   const createCard = async (e) => {
@@ -25,14 +28,16 @@ const CreateCard = () => {
     formData.append("word", post.word);
     formData.append("desc", post.desc);
     formData.append("tag", post.tag);
+    formData.append("examples", post.examples);
     formData.append("image", post.image);
+    formData.append("level", post.level);
+    formData.append("levelProgress", post.levelProgress);
 
     try {
       const response = await fetch("/api/card/new", {
         method: "POST",
         body: formData,
       });
-
 
       if (response.ok) {
         router.push("/");
@@ -45,13 +50,13 @@ const CreateCard = () => {
   };
 
   return (
-      <Form
-        type="Create"
-        post={post}
-        setPost={setPost}
-        submitting={submitting}
-        handleSubmit={createCard}
-      />
+    <Form
+      type="Create"
+      post={post}
+      setPost={setPost}
+      submitting={submitting}
+      handleSubmit={createCard}
+    />
   );
 };
 

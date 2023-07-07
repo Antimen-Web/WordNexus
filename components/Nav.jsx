@@ -39,11 +39,15 @@ const Nav = () => {
               Create card
             </Link>
 
+              <Link href="/dictionary" className="btn blue">
+                  Dictionary
+              </Link>
+
             <button type="button" onClick={signOut} className="outline_btn">
               Sing Out
             </button>
 
-            <Link href="/profile">
+            <Link href={"/profile/" + session?.user.id}>
               <Image
                 src={session?.user.image}
                 alt="profile"
@@ -85,7 +89,7 @@ const Nav = () => {
             {toggleDropdown && (
               <div className="dropdown">
                 <Link
-                  href="/profile"
+                  href="/pages/[id].jsx"
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >

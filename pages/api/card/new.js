@@ -2,7 +2,7 @@ import { connectToDB } from "@utils/database";
 import Card from "@models/card";
 import multiparty from "multiparty";
 import fs from "fs";
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
   cloud_name: "drhtyonlm",
@@ -26,37 +26,43 @@ export default async function handler(req, res) {
       return;
     }
 
-    const { userId, word, desc, tag } = fields;
+    const { userId, word, desc, tag, examples, level, levelProgress } = fields;
     const imageFile = files.image;
 
     try {
       let imageUrl = "";
-      if(imageFile) {
+      if (imageFile) {
         const { path, originalFilename } = imageFile[0];
 
         const res = await cloudinary.uploader.upload(path, {
           public_id: originalFilename,
           width: 324,
           height: 208,
-          crop: 'fill',
+          crop: "fill",
           unique_filename: false,
-          overwrite: true
+          overwrite: true,
         });
 
         imageUrl = res.url;
-
       }
 
       // Connect to the MongoDB database
       await connectToDB();
+
+      console.log(tag);
 
       const newCard = new Card({
         word: word[0],
         creator: userId[0],
         desc: desc[0],
         tag: tag[0],
-        image: imageFile ? imageUrl : "" ,
+        examples: examples[0],
+        image: imageFile ? imageUrl : "",
+        level: level[0],
+        levelProgress: levelProgress[0],
       });
+
+      console.log(newCard);
 
       await newCard.save();
 
