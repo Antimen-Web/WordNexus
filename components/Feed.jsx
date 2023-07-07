@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import CardList from "@components/CardList";
 import { Study } from "@utils/study";
 import Search from "@components/Search";
-import React from "@node_modules/react";
 
 const Feed = () => {
   const inputRef = useRef(null);
