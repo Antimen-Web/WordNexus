@@ -32,6 +32,7 @@ export default NextAuth({
 
         return true;
       } catch (error) {
+        console.log("singIn error");
         console.log(error.message);
         return false;
       }
@@ -44,10 +45,10 @@ export default NextAuth({
 
         return session;
       } catch (error) {
+        console.log("session error");
         console.log(error);
         return false;
       }
     },
   },
 });
-

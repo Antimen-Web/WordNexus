@@ -1,44 +1,57 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import {
+  useAppDispatch,
+  useAppSelector,
+  useDidMountEffect,
+} from "@redux/hooks";
+import { setOneCard } from "@redux/cards/slice";
+import { selectCards } from "@redux/cards/selectors";
+import { useRouter } from "next/router";
 
-const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
-  const [tagsNumber, setTagsNumber] = useState(1);
-  const [tags, setTags] = useState(Array(tagsNumber).fill(""));
+const Form = ({ type, post, submitting, handleSubmit }) => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { updateStatus, createStatus } = useAppSelector(selectCards);
+
+  const tagsArray = JSON.parse(post.tag);
+  const examplesArray = JSON.parse(post.examples);
+
+  const [tagsNumber, setTagsNumber] = useState(tagsArray.length || 1);
+  const [tags, setTags] = useState(tagsArray);
+  const [examplesNumber, setExamplesNumber] = useState(
+    examplesArray.length || 1
+  );
+  const [examples, setExamples] = useState(examplesArray);
 
   const getHandlerTag = (value) => {
     return (event) => {
       const newTags = [...tags];
       newTags[value] = event.target.value;
       setTags(newTags);
+      dispatch(setOneCard({ ...post, tag: JSON.stringify(newTags) }));
     };
   };
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     setTags(Array(tagsNumber).fill(""));
   }, [tagsNumber]);
-
-  useEffect(() => {
-    setPost({ ...post, tag: tags });
-  }, [tags]);
-
-  const [examplesNumber, setExamplesNumber] = useState(1);
-  const [examples, setExamples] = useState(Array(examplesNumber).fill(""));
 
   const getHandlerExample = (value) => {
     return (event) => {
       const newExamples = [...examples];
       newExamples[value] = event.target.value;
       setExamples(newExamples);
+      dispatch(setOneCard({ ...post, examples: JSON.stringify(newExamples) }));
     };
   };
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     setExamples(Array(examplesNumber).fill(""));
   }, [examplesNumber]);
 
-  useEffect(() => {
-    setPost({ ...post, examples: examples });
-  }, [examples]);
+  if (updateStatus === "fulfilled") router.push("/");
+  if (createStatus === "fulfilled") router.push("/");
 
   return (
     <section className="w-full max-w-full flex-start flex-col">
@@ -63,7 +76,9 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           </span>
           <input
             value={post.word}
-            onChange={(e) => setPost({ ...post, word: e.target.value })}
+            onChange={(e) =>
+              dispatch(setOneCard({ ...post, word: e.target.value }))
+            }
             placeholder="Any word or phrase"
             required
             className="form_input"
@@ -72,11 +87,13 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
 
         <label>
           <span className="font-satoshi font-semibold text-base text-gra-700">
-            Description of the meaning and examples
+            Description of the meaning
           </span>
           <textarea
             value={post.desc}
-            onChange={(e) => setPost({ ...post, desc: e.target.value })}
+            onChange={(e) =>
+              dispatch(setOneCard({ ...post, desc: e.target.value }))
+            }
             placeholder="Write your word description here..."
             required
             className="form_textarea"
@@ -92,7 +109,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
 
             <select onChange={(e) => setTagsNumber(+e.target.value)}>
               {Array.from({ length: 10 }, (value, index) => (
-                <option>{index + 1}</option>
+                <option key={index}>{index + 1}</option>
               ))}
             </select>
           </div>
@@ -119,7 +136,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
 
             <select onChange={(e) => setExamplesNumber(+e.target.value)}>
               {Array.from({ length: 10 }, (value, index) => (
-                <option>{index + 1}</option>
+                <option key={index}>{index + 1}</option>
               ))}
             </select>
           </div>
@@ -139,7 +156,9 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setPost({ ...post, image: e.target.files[0] })}
+            onChange={(e) =>
+              dispatch(setOneCard({ ...post, image: e.target.files[0] }))
+            }
           />
         </label>
 

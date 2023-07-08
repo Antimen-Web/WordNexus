@@ -10,6 +10,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json(cards);
     } catch (error) {
+      console.log("get cards error");
       console.log(error.message);
       res.status(500).send("Failed to fetch all cards");
     }

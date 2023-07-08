@@ -1,7 +1,7 @@
 import Card from "@models/card";
 import { connectToDB } from "@utils/database";
 import multiparty from "multiparty";
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
   cloud_name: "drhtyonlm",
@@ -10,13 +10,13 @@ cloudinary.config({
 });
 
 export const config = {
-    api: {
-        bodyParser: false, // Отключение автоматического разбора тела запроса
-    },
+  api: {
+    bodyParser: false, // Отключение автоматического разбора тела запроса
+  },
 };
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     try {
       await connectToDB();
 
@@ -27,18 +27,17 @@ export default async function handler(req, res) {
     } catch (error) {
       return res.status(500).send("Internal Server Error kek");
     }
-  }
-  else if (req.method === 'PATCH') {
+  } else if (req.method === "PATCH") {
     try {
       const form = new multiparty.Form();
       form.parse(req, async (err, fields, files) => {
         if (err) {
           console.error(err);
-          res.status(500).json({error: "An error occurred"});
+          res.status(500).json({ error: "An error occurred" });
           return;
         }
 
-        const {word, desc, tag} = fields;
+        const { word, desc, tag, examples } = fields;
         const imageFile = files.image;
 
         await connectToDB();
@@ -52,29 +51,30 @@ export default async function handler(req, res) {
             public_id: originalFilename,
             width: 324,
             height: 208,
-            crop: 'fill',
+            crop: "fill",
             unique_filename: false,
-            overwrite: true
+            overwrite: true,
           });
 
           existingCard.image = res.url;
         }
 
-        if (!existingCard) return new Response("Card not found", { status: 404 });
+        if (!existingCard)
+          return new Response("Card not found", { status: 404 });
 
         existingCard.word = word[0];
         existingCard.desc = desc[0];
         existingCard.tag = tag[0];
+        existingCard.examples = examples[0];
 
         await existingCard.save();
 
         return res.status(200).json(existingCard);
-      })
+      });
     } catch (error) {
       return res.status(500).send("Failed to update card");
     }
-  }
-  else if (req.method === 'DELETE') {
+  } else if (req.method === "DELETE") {
     try {
       await connectToDB();
 
@@ -85,5 +85,4 @@ export default async function handler(req, res) {
       res.status(500).send("Failed to delete card");
     }
   }
-};
-
+}

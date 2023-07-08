@@ -1,76 +1,46 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import CardList from "@components/CardList";
 import { Study } from "@utils/study";
 import Search from "@components/Search";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { selectFilter } from "@redux/filter/selectors";
+import {
+  setFilteredPosts,
+  setSearchValue,
+  nextPage,
+} from "@redux/filter/slice";
+import { selectCards } from "@redux/cards/selectors";
+import { fetchAllCards } from "@redux/cards/slice";
 
 const Feed = () => {
-  const inputRef = useRef(null);
-  const [searchText, setSearchText] = useState("");
-  const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-  const [visiblePosts, setVisiblePosts] = useState([]);
-  const [page, setPage] = useState(1);
-
-  const filterPosts = () => {
-    const filtered = posts.filter(
-      (post) =>
-        post.word.toLowerCase().includes(searchText.toLowerCase()) ||
-        post.tag.toLowerCase().includes(searchText.toLowerCase())
-    );
-
-    setFilteredPosts(filtered);
-    setVisiblePosts(filtered.slice(0, page * 6));
-  };
+  const dispatch = useAppDispatch();
+  const { searchValue, filteredPosts, page } = useAppSelector(selectFilter);
+  const { allCards } = useAppSelector(selectCards);
 
   useEffect(() => {
-    filterPosts();
-  }, [searchText, posts, page]);
-
-  const handleSearchChange = (e) => {
-    setSearchText(e.target.value);
-    inputRef.current?.focus();
-  };
+    dispatch(setFilteredPosts(allCards));
+  }, [searchValue, allCards, page]);
 
   const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+    dispatch(nextPage());
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch("/api/card/get");
-      const data = await response.json();
-
-      setPosts(data);
-    };
-
-    fetchPosts();
+    dispatch(fetchAllCards());
   }, []);
-
-  useEffect(() => {
-    setVisiblePosts(filteredPosts.slice(0, page * 6));
-  }, [filteredPosts, page]);
 
   return (
     <section className="feed">
-      <form className="relative w-full flex-center max-w-xl">
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Search for a word or a tag"
-          value={searchText}
-          onChange={handleSearchChange}
-          className="search_input peer"
-        />
-      </form>
+      <Search />
 
       <CardList
-        data={visiblePosts}
+        data={filteredPosts}
         handleTagClick={(tag) => {
-          setSearchText(tag);
+          dispatch(setSearchValue(tag));
         }}
       />
 
-      {visiblePosts.length < filteredPosts.length && (
+      {page < filteredPosts.length / 6 && (
         <button className="btn blue mb-10 mt-5" onClick={handleLoadMore}>
           Load More
         </button>

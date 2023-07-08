@@ -1,26 +1,24 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useSession, getSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import { deleteCard, fetchAllCards } from "@redux/cards/slice";
+import { useAppDispatch } from "@redux/hooks";
+import { useRouter } from "next/navigation";
 
-const WordCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
-  let { data: session } = useSession();
-  const pathName = usePathname();
+const WordCard = ({ post, handleTagClick }) => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
+  let { data: session } = useSession();
   const gradients = ["green_gradient", "blue_gradient", "orange_gradient"];
-  const examples = post.examples?.split(",");
-  const tags = post.tag?.split(",");
+  const examples = JSON.parse(post.examples);
+  const tags = JSON.parse(post.tag);
 
   const [inDictionaryWord, setInDictionaryWord] = useState(
     session?.user.allWords.find((elem) => elem._id === post._id)
   );
 
   const [show, setShow] = useState(false);
-
-  const handleShow = () => {
-    setShow(!show);
-  };
 
   function get_random(list) {
     return list[Math.floor(Math.random() * list.length)];
@@ -32,6 +30,24 @@ const WordCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       session.user.allWords.find((elem) => elem._id === post._id)
     );
   }
+
+  const handleShow = () => {
+    setShow(!show);
+  };
+
+  const handleEdit = (post) => {
+    router.push(`/update-card?id=${post._id}`);
+  };
+
+  const handleDelete = async (post) => {
+    const hasConfirmed = confirm("Are you sure you want to delete this card?");
+
+    if (hasConfirmed) {
+      const cardId = post._id;
+      dispatch(deleteCard({ cardId }));
+      dispatch(fetchAllCards());
+    }
+  };
 
   const handleAdd = async (post) => {
     try {
@@ -153,8 +169,11 @@ const WordCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 
       {show && (
         <ol className="my-4 space-y-1 list-decimal list-inside">
-          {examples?.map((example) => (
-            <li className="my-2 font-bold font-satoshi text-sm whitespace-pre-line">
+          {examples?.map((example, index) => (
+            <li
+              key={index}
+              className="my-2 font-bold font-satoshi text-sm whitespace-pre-line"
+            >
               {example}
             </li>
           ))}
@@ -163,7 +182,10 @@ const WordCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 
       <p className="font-inter text-sm blue_gradient cursor-pointer">
         {tags?.map((tag, index) => (
-          <span onClick={() => handleTagClick && handleTagClick(tag)}>
+          <span
+            key={index}
+            onClick={() => handleTagClick && handleTagClick(tag)}
+          >
             {tag}
             {index < tags.length - 1 ? ", " : " "}
           </span>
@@ -174,7 +196,7 @@ const WordCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
           <p
             className="flex gap-2  font-inter text-sm cursor-pointer btn black w-1/2"
-            onClick={handleEdit}
+            onClick={() => handleEdit(post)}
           >
             <Image
               src={"/assets/icons/pen-to-square-solid.svg"}
@@ -187,7 +209,7 @@ const WordCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           </p>
           <p
             className="flex gap-2 font-inter text-sm cursor-pointer btn black w-1/2"
-            onClick={handleDelete}
+            onClick={() => handleDelete(post)}
           >
             <Image
               src={"/assets/icons/trash-solid.svg"}
