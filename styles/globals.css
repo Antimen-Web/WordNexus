@@ -236,3 +236,43 @@ h4 {
 .dict:hover {
   @apply bg-gray-200;
 }
+
+.task {
+  @apply rounded-lg bg-black text-white bg-clip-padding p-4 w-full aspect-square flex flex-col justify-center gap-20 cursor-pointer transition-all duration-300;
+}
+.task.repeat {
+  @apply bg-gradient-to-br from-pink-600 to-purple-500;
+}
+.task.repeat:hover {
+  @apply bg-gradient-to-br from-purple-400 to-pink-500 text-black;
+}
+.task.half {
+  @apply bg-gradient-to-br from-orange-500 to-yellow-500;
+}
+.task.half:hover {
+  @apply bg-gradient-to-br from-yellow-400 to-orange-400 text-black;
+}
+.task.almost {
+  @apply bg-gradient-to-br from-green-400 to-green-500;
+}
+.task.almost:hover {
+  @apply bg-gradient-to-br from-green-400 to-green-300 text-black;
+}
+.task.new {
+  @apply bg-gradient-to-br from-blue-600 to-cyan-600;
+}
+.task.new:hover {
+  @apply bg-gradient-to-br from-cyan-500 to-blue-500 text-black;
+}
+.task__top {
+  @apply flex justify-center;
+}
+.task__bottom {
+  @apply flex justify-center items-center gap-10;
+}
+.task__title {
+  @apply text-3xl;
+}
+.task__text {
+  @apply text-2xl;
+}

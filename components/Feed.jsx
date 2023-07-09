@@ -40,7 +40,7 @@ const Feed = () => {
         }}
       />
 
-      {page < filteredPosts.length / 6 && (
+      {page < allCards.length / 6 && (
         <button className="btn blue mb-10 mt-5" onClick={handleLoadMore}>
           Load More
         </button>

@@ -25,8 +25,6 @@ export const filterSlice = createSlice({
           post.tag.toLowerCase().includes(state.searchValue.toLowerCase())
       );
 
-      console.log(filtered);
-
       state.filteredPosts = filtered.slice(0, state.page * 6);
     },
   },

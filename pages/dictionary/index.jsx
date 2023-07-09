@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Dictionary = () => {
   const { data: session } = useSession();
@@ -22,7 +23,10 @@ const Dictionary = () => {
       <div className="w-full mt-8">
         <h2 className="mb-8">Added words</h2>
 
-        <div className="w-full flex justify-between items-center dict">
+        <Link
+          href="/dictionary/all-words"
+          className="w-full flex justify-between items-center dict"
+        >
           <h3 className="m-0 flex gap-8">
             <Image
               src={"/assets/icons/clipboard-list-solid.svg"}
@@ -41,9 +45,12 @@ const Dictionary = () => {
               alt="list"
             />
           </span>
-        </div>
+        </Link>
 
-        <div className="w-full flex justify-between items-center dict">
+        <Link
+          href="/dictionary/added-by-me"
+          className="w-full flex justify-between items-center dict"
+        >
           <h3 className="m-0 flex gap-8">
             <Image
               src={"/assets/icons/pen-to-square-solid.svg"}
@@ -62,9 +69,12 @@ const Dictionary = () => {
               alt="list"
             />
           </span>
-        </div>
+        </Link>
 
-        <div className="w-full flex justify-between items-center dict">
+        <Link
+          href="/dictionary/from-catalog"
+          className="w-full flex justify-between items-center dict"
+        >
           <h3 className="m-0 flex gap-8">
             <Image
               src={"/assets/icons/user-group-solid.svg"}
@@ -83,9 +93,12 @@ const Dictionary = () => {
               alt="list"
             />
           </span>
-        </div>
+        </Link>
 
-        <div className="w-full flex justify-between items-center dict">
+        <Link
+          href="/dictionary/my-vocabulary"
+          className="w-full flex justify-between items-center dict"
+        >
           <h3 className="m-0 flex gap-8">
             <Image
               src={"/assets/icons/square-check-solid.svg"}
@@ -104,7 +117,7 @@ const Dictionary = () => {
               alt="list"
             />
           </span>
-        </div>
+        </Link>
       </div>
     </section>
   );

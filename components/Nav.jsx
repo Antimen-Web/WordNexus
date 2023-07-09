@@ -35,13 +35,20 @@ const Nav = () => {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
+            <Link
+              href="/study"
+              className="btn green hover:bg-white hover:text-black"
+            >
+              Learn words
+            </Link>
+
             <Link href="/create-card" className="btn black">
               Create card
             </Link>
 
-              <Link href="/dictionary" className="btn blue">
-                  Dictionary
-              </Link>
+            <Link href="/dictionary" className="btn blue">
+              Dictionary
+            </Link>
 
             <button type="button" onClick={signOut} className="outline_btn">
               Sing Out

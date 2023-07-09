@@ -15,11 +15,11 @@ module.exports = {
         "primary-orange": "#FF5722",
       },
       lineHeight: {
-        '12': '3rem',
+        12: "3rem",
       },
       maxWidth: {
-        'xs2': '21rem',
-      }
+        xs2: "21rem",
+      },
     },
   },
   plugins: [],
