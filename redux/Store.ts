@@ -5,8 +5,9 @@ import {
 } from "@reduxjs/toolkit";
 import filter from "./filter/slice";
 import cards from "./cards/slice";
+import learn from "./learn/slice";
 
-const rootReducer = combineReducers({ filter, cards });
+const rootReducer = combineReducers({ filter, cards, learn });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({

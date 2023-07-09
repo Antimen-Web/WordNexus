@@ -1,5 +1,4 @@
 import { useSession } from "next-auth/react";
-import CardList from "@components/CardList";
 import TaskList from "@components/TaskList";
 
 const Study = () => {

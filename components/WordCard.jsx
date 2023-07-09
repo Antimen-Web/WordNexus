@@ -3,11 +3,18 @@ import Image from "next/image";
 import { useSession, getSession } from "next-auth/react";
 import Link from "next/link";
 import { deleteCard, fetchAllCards } from "@redux/cards/slice";
-import { useAppDispatch } from "@redux/hooks";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { useRouter } from "next/navigation";
+import { selectLearn } from "@redux/learn/selectors";
+import { setIndex, setLeft, setWords } from "@redux/learn/slice";
 
-const WordCard = ({ post, handleTagClick }) => {
+const WordCard = ({ post, handleTagClick, study, learningWords }) => {
+  const contain = {
+    objectFit: "contain",
+  };
+
   const dispatch = useAppDispatch();
+  const { index, left } = useAppSelector(selectLearn);
   const router = useRouter();
   let { data: session } = useSession();
   const gradients = ["green_gradient", "blue_gradient", "orange_gradient"];
@@ -18,7 +25,7 @@ const WordCard = ({ post, handleTagClick }) => {
     session?.user.allWords.find((elem) => elem._id === post._id)
   );
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(!!study);
 
   function get_random(list) {
     return list[Math.floor(Math.random() * list.length)];
@@ -115,10 +122,27 @@ const WordCard = ({ post, handleTagClick }) => {
     }
   };
 
+  const handleSuccess = (word) => {
+    if (word.levelProgress > 9) {
+      word.level++;
+    } else {
+      word.levelProgress++;
+    }
+
+    dispatch(setIndex(index + 1));
+    dispatch(setLeft(left - 1));
+    dispatch(setWords(learningWords));
+  };
+
   return (
     <div className={post.image ? "prompt_card p-6 pt-56" : "prompt_card p-6"}>
       {post.image && (
-        <img src={post.image} className="prompt_card__image" alt="word_image" />
+        <img
+          src={post.image}
+          style={study && contain}
+          className="prompt_card__image"
+          alt="word_image"
+        />
       )}
       <div className="flex justify-between items-center gap-5">
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
@@ -271,7 +295,17 @@ const WordCard = ({ post, handleTagClick }) => {
         </div>
       )}
 
-      {session?.user &&
+      {study && (
+        <button
+          className="btn green mt-5 w-full"
+          onClick={() => handleSuccess(post)}
+        >
+          Next
+        </button>
+      )}
+
+      {!study &&
+        session?.user &&
         (inDictionaryWord ? (
           inDictionaryWord.level === 6 ? (
             <button className="btn green mt-5 w-full" disabled>

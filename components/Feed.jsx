@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import CardList from "@components/CardList";
-import { Study } from "@utils/study";
+import { Study } from "@utils/learn";
 import Search from "@components/Search";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { selectFilter } from "@redux/filter/selectors";

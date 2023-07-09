@@ -5,6 +5,7 @@ import {
   faFlagCheckered,
   faRepeat,
 } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 const TaskList = () => {
   return (
@@ -39,7 +40,7 @@ const TaskList = () => {
         </div>
       </div>
 
-      <div className="task new">
+      <Link href="study/new" className="task new">
         <div className="task__top">
           <div className="task__title">Brand new words</div>
         </div>
@@ -47,7 +48,7 @@ const TaskList = () => {
           <span className="task__text">5 words</span>
           <FontAwesomeIcon className="w-1/3" icon={faBolt} />
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

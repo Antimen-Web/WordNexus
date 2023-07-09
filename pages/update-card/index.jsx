@@ -36,7 +36,7 @@ const EditCard = () => {
   return (
     <>
       {oneCardStatus === "pending" ? (
-        [...Array(6)].map((_, i) => <SceletonCard key={i} />)
+        [...Array(1)].map((_, i) => <SceletonCard key={i} />)
       ) : (
         <Form
           type="Edit"
