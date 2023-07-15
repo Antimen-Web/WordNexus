@@ -36,7 +36,6 @@ export const fetchOneCard = createAsyncThunk<CardsProps, { cardId: string }>(
       return data;
     } catch (error) {
       console.error("Error while fetching card: ", error);
-      throw error;
     }
   }
 );
