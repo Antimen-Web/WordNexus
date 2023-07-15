@@ -19,7 +19,7 @@ export default NextAuth({
 
         const userExist = await User.findOne({
           email: profile.email,
-        });
+        }).maxTimeMS(30000);
 
         if (!userExist) {
           await User.create({
@@ -39,7 +39,9 @@ export default NextAuth({
     },
     async session({ session }) {
       try {
-        const sessionUser = await User.findOne({ email: session.user.email });
+        const sessionUser = await User.findOne({
+          email: session.user.email,
+        }).maxTimeMS(30000);
         session.user.id = sessionUser._id.toString();
         session.user.allWords = sessionUser.allWords;
 

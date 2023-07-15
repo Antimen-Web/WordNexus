@@ -5,7 +5,7 @@ import Form from "@components/Form";
 import { fetchOneCard, updateCard } from "@redux/cards/slice";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { selectCards } from "@redux/cards/selectors";
-import SceletonCard from "@components/SceletonCard";
+import SceletonForm from "@components/sceletons/SceletonForm";
 
 const EditCard = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ const EditCard = () => {
   return (
     <>
       {oneCardStatus === "pending" ? (
-        [...Array(1)].map((_, i) => <SceletonCard key={i} />)
+        <SceletonForm />
       ) : (
         <Form
           type="Edit"

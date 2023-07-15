@@ -4,6 +4,7 @@ import WordCard from "@components/WordCard";
 import { selectLearn } from "@redux/learn/selectors";
 import WritingEqualChoice from "@components/exercises/WritingEqualChoice";
 import WritingEqualAssociation from "@components/exercises/WritingEqualAssociation";
+import { shuffleArray } from "@utils/suffleArray";
 
 function newWordsLearning(
   words,
@@ -11,11 +12,44 @@ function newWordsLearning(
   left = 15,
   number = 5,
   allWords,
-  RandomComponent
+  RandomComponent,
+  userId
 ) {
   if (left === 0) {
-    return;
+    let newWords = words?.map((obj) => ({ ...obj }));
+    console.log(newWords);
+    for (let i = 0; i < allWords.length; i++) {
+      console.log(allWords);
+      if (!newWords.length) {
+        const patchWords = async () => {
+          try {
+            const response = await fetch(`/api/users/${userId}/learnedCards`, {
+              method: "PATCH",
+              body: JSON.stringify(allWords),
+            });
+
+            if (response.ok) {
+              console.log("word added");
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        patchWords();
+        return;
+      }
+      for (let j = 0; j < newWords.length; j++) {
+        if (allWords[i]._id === newWords[j]._id) {
+          allWords.splice(i, 1, newWords[j]);
+          newWords.splice(j, 1);
+          console.log("lol");
+          continue;
+        }
+      }
+    }
   }
+
+  console.log("no");
 
   const wordsLength = Math.ceil(left / number);
 
@@ -41,30 +75,19 @@ function newWordsLearning(
       <WordCard post={newWords[index]} study={true} learningWords={newWords} />
     );
   } else {
-    // const error = this.getRandomType(newWords[index]);
-    // if (error) {
-    //   console.log(error + "word: " + newWords[index].word);
-    //   if (left < 3) {
-    //     left++;
-    //   }
-    //   newWords.splice(index + 2, 0, newWords[index]);
-    // }
     console.log("random card" + newWords[index].word);
-    return <RandomComponent post={newWords[index]} learningWords={newWords} />;
-    // newWordsLearning(newWords, index + 1, left - 1);
+    return (
+      <RandomComponent
+        post={newWords[index]}
+        learningWords={newWords}
+        allWords={allWords}
+      />
+    );
   }
-}
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
 }
 
 const New = () => {
-  const exercises = [WritingEqualChoice, WritingEqualAssociation];
+  const exercises = [WritingEqualChoice];
 
   const RandomComponent =
     exercises[Math.floor(Math.random() * exercises.length)];
@@ -84,7 +107,8 @@ const New = () => {
       left,
       number,
       allWords,
-      RandomComponent
+      RandomComponent,
+      session?.user.id
     );
     return exercise;
   }

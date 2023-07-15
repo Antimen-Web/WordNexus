@@ -116,6 +116,7 @@ const Form = ({ type, post, submitting, handleSubmit }) => {
 
           {tags.map((tag, index) => (
             <input
+              key={index}
               value={tags[index]}
               onChange={getHandlerTag(index)}
               placeholder="#tag"
@@ -143,6 +144,7 @@ const Form = ({ type, post, submitting, handleSubmit }) => {
 
           {examples.map((example, index) => (
             <textarea
+              key={index}
               value={examples[index]}
               onChange={getHandlerExample(index)}
               placeholder="Example"

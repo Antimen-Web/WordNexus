@@ -1,4 +1,4 @@
-import SceletonCard from "@components/SceletonCard";
+import SceletonCard from "@components/sceletons/SceletonCard";
 import WordCard from "@components/WordCard";
 import { useAppSelector } from "@redux/hooks";
 import { selectCards } from "@redux/cards/selectors";
@@ -6,8 +6,6 @@ import { selectCards } from "@redux/cards/selectors";
 const CardList = ({ data, handleTagClick, fetched }) => {
   let { allCardsStatus } = useAppSelector(selectCards);
   if (fetched) allCardsStatus = "ok";
-  console.log(data);
-
   return (
     <div className="mt-16 prompt_layout">
       {allCardsStatus === "pending"
