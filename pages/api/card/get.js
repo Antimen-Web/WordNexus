@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     try {
       await connectToDB();
 
-      const cards = await Card.find({}).populate("creator").maxTimeMS(30000);
+      const cards = await Card.find({}).populate("creator");
 
       return res.status(200).json(cards);
     } catch (error) {
