@@ -40,9 +40,9 @@ const SceletonFrom = () => {
           <div className="form_input h-11 rounded-full dark:bg-gray-500 w-20"></div>
         </label>
         <label>
-          <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-72"></div>
+          <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-72"></div>
         </label>
-        <div class="flex-end mx-3 mb-5 gap-4">
+        <div className="flex-end mx-3 mb-5 gap-4">
           <div className="h-8 bg-gray-200 rounded-full dark:bg-gray-700 w-16"></div>
           <div className="h-8 bg-gray-200 rounded-full dark:bg-gray-700 w-16"></div>
         </div>

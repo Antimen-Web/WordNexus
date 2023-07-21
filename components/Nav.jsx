@@ -32,7 +32,7 @@ const Nav = () => {
         <p className="logo_text">WordNexus</p>
       </Link>
 
-      <div className="sm:flex hidden">
+      <div className="flex desk">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link
@@ -81,7 +81,7 @@ const Nav = () => {
         )}
       </div>
 
-      <div className="sm:hidden flex relative">
+      <div className="relative mob">
         {session?.user ? (
           <div className="flex">
             <Image
@@ -104,11 +104,27 @@ const Nav = () => {
                 </Link>
 
                 <Link
-                  href="/create-card"
-                  className="dropdown_link"
+                  href="/study"
+                  className="btn w-full green hover:bg-white hover:text-black"
                   onClick={() => setToggleDropdown(false)}
                 >
-                  Create Card
+                  Learn words
+                </Link>
+
+                <Link
+                  href="/create-card"
+                  className="btn black w-full"
+                  onClick={() => setToggleDropdown(false)}
+                >
+                  Create card
+                </Link>
+
+                <Link
+                  href="/dictionary"
+                  className="btn blue w-full"
+                  onClick={() => setToggleDropdown(false)}
+                >
+                  Dictionary
                 </Link>
 
                 <button

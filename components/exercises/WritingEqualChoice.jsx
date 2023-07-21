@@ -9,11 +9,12 @@ const WritingEqualChoice = ({ post, learningWords, allWords }) => {
   const dispatch = useAppDispatch();
   const { index, left } = useAppSelector(selectLearn);
 
+  console.log("kek");
+
   const randomCards = shuffleArray(allWords).slice(0, 3);
   randomCards.push(post);
   const choiceCards = shuffleArray(randomCards);
 
-  console.log(post);
   const tags = JSON.parse(post.tag).slice(0, 3);
 
   const handleSuccess = (word) => {
@@ -61,8 +62,9 @@ const WritingEqualChoice = ({ post, learningWords, allWords }) => {
       </p>
 
       <div className="flex flex-col my-4 gap-5">
-        {choiceCards.map((word) => (
+        {choiceCards.map((word, index) => (
           <button
+            key={index}
             type="button"
             className="outline_btn"
             onClick={() =>

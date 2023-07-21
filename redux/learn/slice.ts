@@ -4,6 +4,7 @@ import { CardsProps } from "../cards/types";
 
 const initialState: LearnState = {
   learningWords: undefined,
+  completedWords: [],
   index: 0,
   left: 15,
   number: 5,

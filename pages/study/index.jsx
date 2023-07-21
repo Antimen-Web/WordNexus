@@ -4,7 +4,6 @@ import TaskList from "@components/TaskList";
 const Study = () => {
   const { data: session } = useSession();
   const allWords = session?.user.allWords;
-  console.log(allWords);
 
   return (
     <section className="w-full flex-center flex-col">

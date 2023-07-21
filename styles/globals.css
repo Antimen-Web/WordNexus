@@ -193,11 +193,11 @@ h4 {
 
 /* Nav Component */
 .logo_text {
-  @apply max-sm:hidden font-satoshi font-semibold text-lg text-blue-800 tracking-wide;
+  @apply font-satoshi font-semibold text-lg text-blue-800 tracking-wide;
 }
 
 .dropdown {
-  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
+  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end z-10;
 }
 
 .dropdown_link {
@@ -275,4 +275,17 @@ h4 {
 }
 .task__text {
   @apply text-2xl;
+}
+.mob {
+  display: none;
+  @apply border rounded-full border-black;
+}
+
+@media (max-width: 900px) {
+  .desk {
+    display: none;
+  }
+  .mob {
+    display: flex;
+  }
 }
