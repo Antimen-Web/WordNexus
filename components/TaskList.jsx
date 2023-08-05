@@ -40,7 +40,7 @@ const TaskList = () => {
         </div>
       </div>
 
-      <Link href="study/new" className="task new">
+      <div className="task new">
         <div className="task__top">
           <div className="task__title">Brand new words</div>
         </div>
@@ -48,7 +48,7 @@ const TaskList = () => {
           <span className="task__text">5 words</span>
           <FontAwesomeIcon className="w-1/3" icon={faBolt} />
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
